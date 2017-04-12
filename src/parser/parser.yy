@@ -2,11 +2,11 @@
 %require  "3.0"
 %debug 
 %defines 
-%define api.namespace {pal}
+%define api.namespace {json}
 %define parser_class_name {Parser}
 
 %code requires{
-    namespace pal {
+    namespace json {
         class Brain;
         class Scanner;
     }
@@ -107,7 +107,7 @@ e: EXP
 
 %%
 
-void pal::Parser::error(const location_type& loc, const std::string& err_message)
+void json::Parser::error(const location_type& loc, const std::string& err_message)
 {
     std::cerr << "Syntax Error: " << err_message << " at ";
     std::cerr << loc.begin.line << ":" << loc.begin.column << " - ";

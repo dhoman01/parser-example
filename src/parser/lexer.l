@@ -8,9 +8,9 @@
 #include "scanner.hpp"
 
 #undef  YY_DECL
-#define YY_DECL int pal::Scanner::yylex(pal::Parser::semantic_type* const lval, pal::Parser::location_type* loc)
+#define YY_DECL int json::Scanner::yylex(json::Parser::semantic_type* const lval, json::Parser::location_type* loc)
 
-using token = pal::Parser::token;
+using token = json::Parser::token;
 
 #define YY_NO_UNISTD_H
 
@@ -20,7 +20,7 @@ using token = pal::Parser::token;
 
 %option debug
 %option nodefault
-%option yyclass="pal::Scanner"
+%option yyclass="json::Scanner"
 %option noyywrap
 %option c++
 %s comment

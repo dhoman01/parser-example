@@ -7,7 +7,7 @@
 #include "../parser/parser.tab.hh"
 #include "../parser/scanner.hpp"
 
-namespace pal
+namespace json
 {
 
 class Brain
