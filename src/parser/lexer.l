@@ -23,6 +23,7 @@ using token = pal::Parser::token;
 %option yyclass="pal::Scanner"
 %option noyywrap
 %option c++
+%s comment
 
 %%
 %{
@@ -32,12 +33,22 @@ using token = pal::Parser::token;
  /* remove whitespace */
 [ \t]+                  {}
 
-->                      {
-                            return token::ASSIGN_KEY;
+ /* Comments */
+"//".*\n                { 
+                            loc->lines();
                         }
 
- /* Comments */
-#.*\n                   { 
+"/*"                    {
+                            BEGIN(comment);
+                        }
+
+<comment>"*/"           {
+                            BEGIN(INITIAL);
+                        }
+
+<comment>.              {}
+
+<comment>\n             {
                             loc->lines();
                         }
 
