@@ -30,3 +30,4 @@
 
 # Build Folder
 build/
+tests/integration/Results/

@@ -2,11 +2,12 @@
 %require  "3.0"
 %debug 
 %defines 
-%define api.namespace {pal}
+%define api.namespace {json}
 %define parser_class_name {Parser}
 
 %code requires{
-    namespace pal {
+    #include "../brains/Values.hpp"
+    namespace json {
         class Brain;
         class Scanner;
     }
@@ -47,67 +48,75 @@
 %token NEGATIVE
 %token EXP
 
+%type<std::string> STRING_VALUE INTEGER_VALUE EXP string number int frac exp e
+%type<std::shared_ptr<json::ObjectValue>> object
+%type<std::shared_ptr<json::ArrayValue>> array
+%type<std::shared_ptr<json::Value>> value
+%type<std::vector<std::shared_ptr<json::Value>>> elements
+%type<std::vector<json::Pair>> members
+%type<json::Pair> pair
+
 %locations
 
 %%
 
-start: object
-     | array
+start: object                           { std::cout << $1->ToString() << std::endl; }
+     | array                            { std::cout << $1->ToString() << std::endl; }
      ;
 
-object: OPEN_OBJ CLOSE_OBJ
-      | OPEN_OBJ members CLOSE_OBJ
+object: OPEN_OBJ members CLOSE_OBJ      { $$ = brain.actions.CreateObjectValue($2); }
       ;
 
-members: members COMMA pair
-       | pair
+members: members COMMA pair             { $1.push_back($3); $$ = $1; }
+       | pair                           { std::vector<json::Pair> list; list.push_back($1); $$ = list; }
+       |                                { $$ = std::vector<json::Pair>(); }
        ;
 
-pair: string COLON value
+pair: string COLON value                { $$ = brain.actions.CreatePair($1, $3); }
     ;
 
-array: OPEN_ARR CLOSE_ARR
-     | OPEN_ARR elements CLOSE_ARR
+array: OPEN_ARR elements CLOSE_ARR      { $$ = brain.actions.CreateArrayValue($2); }
      ;
 
-elements: elements COMMA value
-        | value
+elements: elements COMMA value          { $1.push_back($3); $$ = $1; }
+        | value                         { std::vector<std::shared_ptr<json::Value>> list; list.push_back($1); $$ = list;}
+        |                               { $$ = std::vector<std::shared_ptr<json::Value>>(); }
         ;
 
-value: string
-     | number
-     | object
-     | array
-     | TRUE_KEY
-     | FALSE_KEY
-     | NULL_KEY
+value: string                           { $$ = brain.actions.CreateStringValue($1); }
+     | number                           { $$ = brain.actions.CreateNumberValue($1); }
+     | object                           { $$ = $1; }
+     | array                            { $$ = $1; }
+     | TRUE_KEY                         { $$ = brain.actions.CreateBooleanValue(true); }
+     | FALSE_KEY                        { $$ = brain.actions.CreateBooleanValue(false); }
+     | NULL_KEY                         { $$ = brain.actions.CreateNullValue(); }
      ;
 
-string: STRING_VALUE
+string: STRING_VALUE                    { $$ = $1; }
       ;
 
-number: int
-      | int frac
-      | int exp
-      | int frac exp
+number: int                             { $$ = $1; }
+      | int frac                        { $$ = $1 + $2; }
+      | int exp                         { $$ = $1 + $2; }
+      | int frac exp                    { $$ = $1 + $2 + $3; }
       ;
 
-int: INTEGER_VALUE
-   | NEGATIVE INTEGER_VALUE
+int: INTEGER_VALUE                      { $$ = $1; }
+   | NEGATIVE INTEGER_VALUE             { $$ = "-" + $2; }
    ;
 
-frac: FRACTION INTEGER_VALUE
+frac: FRACTION INTEGER_VALUE            { $$ = "." + $2; }
     ;
 
-exp: e INTEGER_VALUE
+exp: e INTEGER_VALUE                    { $$ = $1 + $2; }
    ;
 
-e: EXP
+e: EXP                                  { $$ = $1; }
  ;
 
 %%
 
-void pal::Parser::error(const location_type& loc, const std::string& err_message)
+void json::Parser::error(const location_type& loc, const std::string& err_message)
 {
     std::cerr << "Syntax Error: " << err_message << " at ";
     std::cerr << loc.begin.line << ":" << loc.begin.column << " - ";

@@ -7,19 +7,24 @@
 #include "../parser/parser.tab.hh"
 #include "../parser/scanner.hpp"
 
-namespace pal
+#include "Actions.hpp"
+
+namespace json
 {
 
 class Brain
 {
 public:
-    Brain();
+    Brain(){};
     virtual ~Brain() = default;
 
     void Parse(const char* const filename);
     void Parse(std::istream& iss);
+    
+    Actions actions;
 private:
     void ParseHelper(std::istream& stream);
+
 
     std::shared_ptr<Parser> parser = nullptr;
     std::shared_ptr<Scanner> scanner = nullptr;

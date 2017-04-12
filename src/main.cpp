@@ -13,7 +13,7 @@ bool matchArgs(const char* arg, std::string opt)
 
 void printUsage(std::ostream& iss)
 {
-    iss << "usage: pal [/path/to/file/target | --stdio | --help] [options]" << std::endl;
+    iss << "usage: json [/path/to/file/target | --stdio | --help] [options]" << std::endl;
     iss << "Options: " << std::endl;
     iss << "\t\u2022 use --help to get this menu" << std::endl;
     iss << "\t\u2022 use --stdio for pipe to std::cin" << std::endl;
@@ -42,7 +42,7 @@ int main(const int argc, const char** argv)
             coutRestore = true;
         }
 
-        pal::Brain brain;
+        json::Brain brain;
         try
         {
             if(matchArgs(argv[1], std::string("--stdio")))

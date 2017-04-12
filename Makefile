@@ -3,7 +3,7 @@ all: compile
 compile: setup parser copy
 	echo "Compiling final executable";
 	cd build/brains; \
-	g++ ../main.cpp Brain.cpp ../parser/*.cc --std=c++14 -o ../pal
+	g++ ../main.cpp Brain.cpp Actions.cpp ../parser/*.cc --std=c++14 -o ../json
 
 setup:
 	mkdir -p build
@@ -20,7 +20,7 @@ parser:
 
 copy:	
 	cd src/brains; \
-	cp Brain.* ../../build/brains
+	cp *.* ../../build/brains
 	cd src; \
 	cp main.cpp ../build
 
@@ -28,4 +28,5 @@ clean:
 	rm -r build/
 
 test:
-	echo -e "No Tests Yet..."
+	cd tests/integration; \
+	./test.sh;
