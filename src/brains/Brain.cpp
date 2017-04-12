@@ -18,7 +18,7 @@ void pal::Brain::Parse(const char* const filename)
     
     pal::Brain::ParseHelper(in);
     return;
-}
+};
 
 void pal::Brain::Parse(std::istream& stream)
 {
@@ -27,7 +27,7 @@ void pal::Brain::Parse(std::istream& stream)
     
     pal::Brain::ParseHelper(stream);
     return;
-}
+};
 
 void pal::Brain::ParseHelper(std::istream& stream)
 {
@@ -35,4 +35,4 @@ void pal::Brain::ParseHelper(std::istream& stream)
     parser = std::make_shared<pal::Parser>((*scanner.get()), (*this));
     parser->parse();
     return;
-}
+};

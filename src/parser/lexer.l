@@ -30,6 +30,66 @@ using token = pal::Parser::token;
     yylval = lval;
 %}
 
+ /* Keywords */
+true                    {
+                            return token::TRUE_KEY;
+                        }
+
+false                   {
+                            return token::FALSE_KEY;
+                        }
+
+null                    {
+                            return token::NULL_KEY;
+                        }
+
+ /* Values */
+\"(\\.|[^"\n])*\"       {
+                            return token::STRING_VALUE;
+                        }
+
+[0-9]+                  {
+                            return token::INTEGER_VALUE;
+                        }
+
+ /* Delimiters */
+
+"{"                     {
+                            return token::OPEN_OBJ;
+                        }
+
+"}"                     {
+                            return token::CLOSE_OBJ;
+                        }
+
+"["                     {   
+                            return token::OPEN_ARR;
+                        }
+
+"]"                     {
+                            return token::CLOSE_ARR;
+                        }
+
+","                     {
+                            return token::COMMA;
+                        }
+
+":"                     {
+                            return token::COLON;   
+                        }
+
+"."                     {
+                            return token::FRACTION;
+                        }
+
+"-"                     {
+                            return token::NEGATIVE;
+                        }
+
+(?i:"e"|"e+"|"e-")      {
+                            return token::EXP;
+                        }
+
  /* remove whitespace */
 [ \t]+                  {}
 

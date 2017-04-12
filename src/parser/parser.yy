@@ -32,15 +32,28 @@
 
 %error-verbose
 
-%token ASSIGN_KEY
-
+%token TRUE_KEY
+%token FALSE_KEY
+%token NULL_KEY
+%token STRING_VALUE
+%token INTEGER_VALUE
+%token OPEN_OBJ
+%token CLOSE_OBJ
+%token OPEN_ARR
+%token CLOSE_ARR
+%token COMMA
+%token COLON
+%token FRACTION
+%token NEGATIVE
+%token EXP
 
 %locations
 
 %%
 
-program: ASSIGN_KEY
-    ;
+program: TRUE_KEY
+       |
+       ;
 
 %%
 
