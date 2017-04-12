@@ -4,7 +4,7 @@ The goal of this project is to provide a simple tutorial to introduce the concep
 I also use [make](https://www.gnu.org/software/make/) to build the project, but that is not required (it is assumed that you are using some flavor of UNIX). In lue of [make](https://www.gnu.org/software/make/) you can use the command line tools directly. Please reference my Makefile and the tool's docs for usage.
 
 # Language
-## Lexical Structure
+## Lexical Structure - ([notes](notes/lexical.md))
 ### Introduction
 The following sections describe a language that allows you to assign palindromes to numbers, then write those numbers to the console.
 
@@ -23,7 +23,7 @@ A comment in this language begins with a # and continues to the end of the line.
 ### Blanks, Tabs, Spaces, and New Lines
 All white space is ignored in this language.
 
-## Syntactic Structure
+## Syntactic Structure - ([notes](notes/syntax.md))
 ### Palindrome
 <pre>
 {Palindrome} --> a{Palindrome}a
