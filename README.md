@@ -27,18 +27,18 @@ All white space is ignored in this language.
 ### Palindrome
 <pre>
 {Palindrome} --> a{Palindrome}a
-            |   b{Palindrome}b
-            |   c{Palindrome}c
+            |    b{Palindrome}b
+            |    c{Palindrome}c
             .
             .
             .
-            |   z{Palindrome}z
-            |   A{Palindrome}A
+            |    z{Palindrome}z
+            |    A{Palindrome}A
             .
             .
             .
-            |   Z{Palindrome}Z
-            |   {empty}
+            |    Z{Palindrome}Z
+            |    {empty}
 </pre>
 
 ### Statements
@@ -51,12 +51,36 @@ All white space is ignored in this language.
 #### Assignment
 <pre>
 {assignmentList} --> {assignmentList}[, {asssignment}]*
-{assignment} --> <ident> -> {Palindrome}
+{assignment} --> {ident} -> {Palindrome}
 </pre>
 
 #### Write Statment
 <pre>{writeStatement} --> write({assignmentList})</pre>
 
+### Identifer Declaration
+
+<pre>{ident} --> [1-9][0-9]*</pre>
 
 ### Program
 <pre>{program} --> begin {statementList} end</pre>
+
+## Semantic Structure
+### Write
+The write function prints the identifier and its assigned palindrome. When a list of assignments is passed in, write prints each assignment on a seperate line.
+#### Example
+##### Code
+<pre>
+1 -> aba;
+2 -> cdc;
+3 -> aaa;
+4 -> ;
+write(1,2,3,4);
+</pre>
+
+##### Output
+<pre>
+1: aba
+2: cdc
+3: aaa
+4:
+</pre>
