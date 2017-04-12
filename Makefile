@@ -3,7 +3,7 @@ all: compile
 compile: setup parser copy
 	echo "Compiling final executable";
 	cd build/brains; \
-	g++ ../main.cpp Brain.cpp ../parser/*.cc --std=c++14 -o ../pal
+	g++ ../main.cpp Brain.cpp ../parser/*.cc --std=c++14 -o ../json
 
 setup:
 	mkdir -p build
