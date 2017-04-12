@@ -106,7 +106,7 @@ null                    {
                             BEGIN(INITIAL);
                         }
 
-<comment>.              {}
+<comment>.*              {}
 
 <comment>\n             {
                             loc->lines();

@@ -51,9 +51,59 @@
 
 %%
 
-program: TRUE_KEY
-       |
+start: object
+     | array
+     ;
+
+object: OPEN_OBJ CLOSE_OBJ
+      | OPEN_OBJ members CLOSE_OBJ
+      ;
+
+members: members COMMA pair
+       | pair
        ;
+
+pair: string COLON value
+    ;
+
+array: OPEN_ARR CLOSE_ARR
+     | OPEN_ARR elements CLOSE_ARR
+     ;
+
+elements: elements COMMA value
+        | value
+        ;
+
+value: string
+     | number
+     | object
+     | array
+     | TRUE_KEY
+     | FALSE_KEY
+     | NULL_KEY
+     ;
+
+string: STRING_VALUE
+      ;
+
+number: int
+      | int frac
+      | int exp
+      | int frac exp
+      ;
+
+int: INTEGER_VALUE
+   | NEGATIVE INTEGER_VALUE
+   ;
+
+frac: FRACTION INTEGER_VALUE
+    ;
+
+exp: e INTEGER_VALUE
+   ;
+
+e: EXP
+ ;
 
 %%
 
